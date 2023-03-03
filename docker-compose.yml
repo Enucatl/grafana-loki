@@ -25,7 +25,7 @@ services:
     networks:
       - traefik_proxy
     labels:
-      - 'traefik.enable=false'
+      - 'traefik.enable=true'
       - 'traefik.http.routers.grafana.rule=Host(`grafana.nuc10i7fnh.home.arpa`)'
       - 'traefik.http.routers.grafana.entrypoints=https'
       - 'traefik.http.routers.grafana.tls=true'
