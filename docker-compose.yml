@@ -5,7 +5,7 @@ services:
   loki:
     image: grafana/loki:2.4.0
     volumes:
-      - /home/user/src/grafana-loki/loki:/etc/loki
+      - /home/user/docker/grafana-loki/loki:/etc/loki
     ports:
       - "3100:3100"
     restart: unless-stopped
@@ -17,12 +17,21 @@ services:
     image: grafana/grafana:latest
     user: "1000"
     volumes:
-      - /home/user/docker/grafana-loki/grafana:/var/lib/grafana
-    ports:
-      - "3000:3000"
+      - /home/user/docker/grafana-loki/grafana/data:/var/lib/grafana
+      - /home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+    expose:
+      - 3000
     restart: unless-stopped
     networks:
       - traefik_proxy
+    labels:
+      - 'traefik.enable=false'
+      - 'traefik.http.routers.grafana.rule=Host(`grafana.nuc10i7fnh.home.arpa`)'
+      - 'traefik.http.routers.grafana.entrypoints=https'
+      - 'traefik.http.routers.grafana.tls=true'
+      - "traefik.http.routers.grafana.middlewares=authelia@docker,secured@file"
+      - "traefik.http.routers.grafana.service=grafana"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
 
 
 networks:
