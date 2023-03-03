@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+
+  loki:
+    image: grafana/loki:2.4.0
+    volumes:
+      - /home/user/src/grafana-loki/loki:/etc/loki
+    ports:
+      - "3100:3100"
+    restart: unless-stopped
+    command: -config.file=/etc/loki/loki-config.yml
+    networks:
+      traefik_proxy:
+
+  grafana:
+    image: grafana/grafana:latest
+    user: "1000"
+    volumes:
+      - /home/user/docker/grafana-loki/grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - traefik_proxy
+
+
+networks:
+  traefik_proxy:
+    external: true
