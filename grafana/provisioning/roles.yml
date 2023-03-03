@@ -1,0 +1,16 @@
+---
+# config file version
+apiVersion: 2
+
+# <list> list role assignments to teams to create or remove.
+teams:
+  # <string, required> name of the team you want to assign roles to. Required.
+  - name: 'Main Org.'
+    # <int> org id. Will default to Grafana's default if not specified.
+    orgId: 1
+    # <list> list of roles to assign to the team
+    roles:
+      # <string> uid of the role you want to assign to the team.
+      - name: 'Admin'
+        # <int> org id. Will default to Grafana's default if not specified.
+        orgId: 1

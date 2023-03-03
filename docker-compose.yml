@@ -19,6 +19,7 @@ services:
     volumes:
       - data:/var/lib/grafana
       - /home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - /home/user/docker/grafana-loki/grafana/provisioning:/etc/grafana/provisioning:ro
     expose:
       - 3000
     restart: unless-stopped
