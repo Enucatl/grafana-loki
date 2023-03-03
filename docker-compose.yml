@@ -17,7 +17,7 @@ services:
     image: grafana/grafana:latest
     user: "1000"
     volumes:
-      - /home/user/docker/grafana-loki/grafana/data:/var/lib/grafana
+      - data:/var/lib/grafana
       - /home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
     expose:
       - 3000
@@ -32,6 +32,10 @@ services:
       - "traefik.http.routers.grafana.middlewares=authelia@docker,secured@file"
       - "traefik.http.routers.grafana.service=grafana"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+
+
+volumes:
+  data:
 
 
 networks:
