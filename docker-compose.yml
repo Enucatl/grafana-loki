@@ -17,7 +17,7 @@ services:
       - 'traefik.http.routers.loki.rule=Host(`loki.nuc10i7fnh.home.arpa`)'
       - 'traefik.http.routers.loki.entrypoints=https'
       - 'traefik.http.routers.loki.tls=true'
-      - "traefik.http.routers.loki.middlewares=secured@file"
+      - "traefik.http.routers.loki.middlewares=https-redirectscheme@file"
       - "traefik.http.routers.loki.service=loki"
       - "traefik.http.services.loki.loadbalancer.server.port=3100"
 
