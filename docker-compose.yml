@@ -6,12 +6,20 @@ services:
     image: grafana/loki:2.4.0
     volumes:
       - /home/user/docker/grafana-loki/loki:/etc/loki
-    ports:
-      - "3100:3100"
+    expose:
+      - 3100
     restart: unless-stopped
     command: -config.file=/etc/loki/loki-config.yml
     networks:
       traefik_proxy:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.loki.rule=Host(`loki.nuc10i7fnh.home.arpa`)'
+      - 'traefik.http.routers.loki.entrypoints=https'
+      - 'traefik.http.routers.loki.tls=true'
+      - "traefik.http.routers.loki.middlewares=secured@file"
+      - "traefik.http.routers.loki.service=loki"
+      - "traefik.http.services.loki.loadbalancer.server.port=3100"
 
   grafana:
     image: grafana/grafana:latest
