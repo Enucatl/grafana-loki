@@ -28,6 +28,7 @@ services:
       - data:/var/lib/grafana
       - /home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - /home/user/docker/grafana-loki/grafana/provisioning:/etc/grafana/provisioning:ro
+      - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     expose:
       - 3000
     restart: unless-stopped
