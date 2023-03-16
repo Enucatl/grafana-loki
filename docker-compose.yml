@@ -13,6 +13,7 @@ services:
     networks:
       traefik_proxy:
     labels:
+      - 'checkmk_monitor=true'
       - 'traefik.enable=true'
       - 'traefik.http.routers.loki.rule=Host(`loki.nuc10i7fnh.home.arpa`)'
       - 'traefik.http.routers.loki.entrypoints=https'
@@ -35,6 +36,7 @@ services:
     networks:
       - traefik_proxy
     labels:
+      - 'checkmk_monitor=true'
       - 'traefik.enable=true'
       - 'traefik.http.routers.grafana.rule=Host(`grafana.nuc10i7fnh.home.arpa`)'
       - 'traefik.http.routers.grafana.entrypoints=https'
