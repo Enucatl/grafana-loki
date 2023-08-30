@@ -5,7 +5,7 @@ services:
   loki:
     image: grafana/loki:2.4.0
     volumes:
-      - /home/user/docker/grafana-loki/loki:/etc/loki
+      - /nfs_exports/home/user/docker/grafana-loki/loki:/etc/loki
     expose:
       - 3100
     restart: unless-stopped
@@ -27,8 +27,8 @@ services:
     user: "1000"
     volumes:
       - data:/var/lib/grafana
-      - /home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
-      - /home/user/docker/grafana-loki/grafana/provisioning:/etc/grafana/provisioning:ro
+      - /nfs_exports/home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - /nfs_exports/home/user/docker/grafana-loki/grafana/provisioning:/etc/grafana/provisioning:ro
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     expose:
       - 3000
