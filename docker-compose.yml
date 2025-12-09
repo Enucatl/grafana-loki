@@ -1,21 +1,20 @@
-version: "3.8"
-
 services:
 
   loki:
     image: grafana/loki:latest
     volumes:
-      - /nfs_exports/home/user/docker/grafana-loki/loki:/etc/loki
+      - ./loki:/etc/loki
+      - loki_data:/var/lib/loki
     expose:
       - 3100
     restart: unless-stopped
     command: -config.file=/etc/loki/loki-config.yml
     networks:
-      traefik_proxy:
+      - traefik_proxy
     labels:
       - 'checkmk_monitor=true'
       - 'traefik.enable=true'
-      - 'traefik.http.routers.loki.rule=Host(`loki.nuc10i7fnh.home.arpa`)'
+      - 'traefik.http.routers.loki.rule=Host(`loki.${DOCKER_DOMAIN}`)'
       - 'traefik.http.routers.loki.entrypoints=https'
       - 'traefik.http.routers.loki.tls=true'
       - "traefik.http.routers.loki.middlewares=https-redirectscheme@file"
@@ -24,11 +23,11 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    user: "1000"
     volumes:
-      - data:/var/lib/grafana
-      - /nfs_exports/home/user/docker/grafana-loki/grafana/grafana.ini:/etc/grafana/grafana.ini:ro
-      - /nfs_exports/home/user/docker/grafana-loki/grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/roles.yaml:/etc/grafana/provisioning/access-control/roles.yml
+      - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     expose:
       - 3000
@@ -38,7 +37,7 @@ services:
     labels:
       - 'checkmk_monitor=true'
       - 'traefik.enable=true'
-      - 'traefik.http.routers.grafana.rule=Host(`grafana.nuc10i7fnh.home.arpa`)'
+      - 'traefik.http.routers.grafana.rule=Host(`grafana.${DOCKER_DOMAIN}`)'
       - 'traefik.http.routers.grafana.entrypoints=https'
       - 'traefik.http.routers.grafana.tls=true'
       - "traefik.http.routers.grafana.middlewares=authelia@docker,secured@file"
@@ -47,8 +46,8 @@ services:
 
 
 volumes:
-  data:
-
+  grafana_data:
+  loki_data:
 
 networks:
   traefik_proxy:
