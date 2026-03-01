@@ -34,9 +34,11 @@ services:
     restart: unless-stopped
     networks:
       - traefik_proxy
+      - crabberbot
     labels:
       - 'checkmk_monitor=true'
       - 'traefik.enable=true'
+      - 'traefik.docker.network=traefik_proxy'
       - 'traefik.http.routers.grafana.rule=Host(`grafana.${DOCKER_DOMAIN}`)'
       - 'traefik.http.routers.grafana.entrypoints=https'
       - 'traefik.http.routers.grafana.tls=true'
@@ -51,4 +53,6 @@ volumes:
 
 networks:
   traefik_proxy:
+    external: true
+  crabberbot:
     external: true
