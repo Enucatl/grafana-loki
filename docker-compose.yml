@@ -28,6 +28,8 @@ services:
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
       - ./grafana/roles.yaml:/etc/grafana/provisioning/access-control/roles.yml
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+      - ./grafana/dashboards/provider.yaml:/etc/grafana/provisioning/dashboards/provider.yaml:ro
+      - ../crabberbot/grafana-dashboard.json:/var/lib/grafana/dashboards/crabberbot.json:ro
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     expose:
       - 3000
