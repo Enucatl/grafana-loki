@@ -32,6 +32,15 @@ docker compose up -d
 
 Grafana will be available at `https://grafana.<DOCKER_DOMAIN>` and Loki at `https://loki.<DOCKER_DOMAIN>`. Loki is pre-configured as the default datasource in Grafana via provisioning.
 
+## Dashboards
+
+Grafana dashboards are provisioned automatically via the `/etc/grafana/provisioning/dashboards/provider.yaml` configuration. External dashboards can be mounted by adding volume entries in the `docker-compose.yml` file. For example, the **crabberbot** dashboard is mounted from `../crabberbot/grafana-dashboard.json` and will be available in Grafana after startup.
+
+To add additional dashboards:
+1. Mount the dashboard JSON file as a volume in the `grafana` service
+2. Target a path under `/var/lib/grafana/dashboards/`
+3. Restart the stack: `docker compose up -d`
+
 ## Directory Structure
 
 ```
@@ -40,6 +49,8 @@ Grafana will be available at `https://grafana.<DOCKER_DOMAIN>` and Loki at `http
 ├── grafana/
 │   ├── grafana.ini          # Grafana server config
 │   ├── datasources.yaml     # Provisioned Loki datasource
+│   ├── dashboards/
+│   │   └── provider.yaml    # Dashboard provisioning config
 │   └── roles.yaml           # Access control roles
 └── loki/
     └── loki-config.yml      # Loki server config
