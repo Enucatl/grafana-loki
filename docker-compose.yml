@@ -1,7 +1,11 @@
 services:
 
   loki:
+    extends:
+      file: ../compose-security-baseline/hardening.yml
+      service: hardened-medium
     image: grafana/loki:latest
+    cpu_shares: 128
     volumes:
       - ./loki:/etc/loki
       - loki_data:/var/lib/loki
@@ -22,7 +26,11 @@ services:
       - "traefik.http.services.loki.loadbalancer.server.port=3100"
 
   grafana:
+    extends:
+      file: ../compose-security-baseline/hardening.yml
+      service: hardened-medium
     image: grafana/grafana:latest
+    cpu_shares: 128
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
