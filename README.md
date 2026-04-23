@@ -51,7 +51,7 @@ To add additional dashboards:
 │   ├── datasources.yaml     # Provisioned Loki datasource
 │   ├── dashboards/
 │   │   └── provider.yaml    # Dashboard provisioning config
-│   └── roles.yaml           # Access control roles
+│   └── roles.yml            # Access control roles
 └── loki/
     └── loki-config.yml      # Loki server config
 ```

@@ -54,6 +54,7 @@ limits_config:
   
   # --- QUERY LIMITS ---
   max_entries_limit_per_query: 1000000
+  max_query_length: 33d
   query_timeout: 1m
   
   # --- LABEL LIMITS ---

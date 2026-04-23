@@ -34,7 +34,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
-      - ./grafana/roles.yaml:/etc/grafana/provisioning/access-control/roles.yml
+      - ./grafana/roles.yml:/etc/grafana/provisioning/access-control/roles.yml
       - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
       - ./grafana/dashboards/provider.yaml:/etc/grafana/provisioning/dashboards/provider.yaml:ro
       - ../crabberbot/grafana-dashboard.json:/var/lib/grafana/dashboards/crabberbot.json:ro
