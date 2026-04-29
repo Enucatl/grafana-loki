@@ -33,6 +33,7 @@ schema_config:
 compactor:
   working_directory: /var/lib/loki/compactor
   delete_request_store: filesystem
+  delete_request_cancel_period: 0s
   compaction_interval: 60m
   retention_enabled: true
   retention_delete_delay: 48h
@@ -42,6 +43,8 @@ ruler:
   alertmanager_url: http://localhost:9093
 
 limits_config:
+  deletion_mode: filter-and-delete
+
   #retention_period: 720h  # 1 month
   retention_period: 1440h  # 2 months
 

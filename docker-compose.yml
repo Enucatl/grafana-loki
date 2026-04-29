@@ -9,6 +9,8 @@ services:
     volumes:
       - ./loki:/etc/loki
       - loki_data:/var/lib/loki
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
     expose:
       - 3100
     restart: unless-stopped
