@@ -43,6 +43,8 @@ services:
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
     environment:
       - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE=/run/secrets/oidc_client_secret
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
     expose:
       - 3000
     restart: unless-stopped
