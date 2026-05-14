@@ -41,6 +41,8 @@ services:
       - ./grafana/dashboards/provider.yaml:/etc/grafana/provisioning/dashboards/provider.yaml:ro
       - ../crabberbot/grafana-dashboard.json:/var/lib/grafana/dashboards/crabberbot.json:ro
       - /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt:ro
+    environment:
+      - GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET__FILE=/run/secrets/oidc_client_secret
     expose:
       - 3000
     restart: unless-stopped
@@ -54,9 +56,11 @@ services:
       - 'traefik.http.routers.grafana.rule=Host(`grafana.${DOCKER_DOMAIN}`)'
       - 'traefik.http.routers.grafana.entrypoints=https'
       - 'traefik.http.routers.grafana.tls=true'
-      - "traefik.http.routers.grafana.middlewares=authelia@docker,secured@file"
+      - "traefik.http.routers.grafana.middlewares=secured@file"
       - "traefik.http.routers.grafana.service=grafana"
       - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    secrets:
+      - oidc_client_secret
 
 
 volumes:
@@ -68,3 +72,7 @@ networks:
     external: true
   crabberbot:
     external: true
+
+secrets:
+  oidc_client_secret:
+    file: secrets/oidc_client_secret
